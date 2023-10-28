@@ -1,0 +1,197 @@
+<html><head>
+  <title><i><b>SGPA Calculator</b></i></title>
+  <style>
+      body {
+          font-family: 'Times New Roman', Times, serif, sans-serif;
+          background-color: #000000;
+          color: #ffffff;
+          margin: 10;
+          padding: 23px;
+      }
+
+      h1 {
+          text-align: center;
+          margin-bottom: 25px;
+      }
+
+      table {
+          width: 150%;
+          font-size: 17px;
+          max-width: 700px;
+          max-height: 50px;
+          border-collapse: collapse;
+          box-shadow: 0 0 10px rgb(255, 255, 255);
+          background-color: #000000;
+          color: #ffffff;
+          margin: 0 auto;
+      }
+
+      th, td {
+          border: 1px solid #ffffff;
+          box-shadow: 0 0 5px rgb(255, 255, 255);
+          padding: 15px;
+          text-align: center;
+      }
+
+      th {
+          background-color: #000000;
+          color: #ffffff;
+      }
+
+      input {
+          width: 60px;
+          padding: 5px;
+          border: 1px solid #000000;
+          color: #000000;
+          border-radius: 4px;
+          text-align: center;
+      }
+
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }
+
+      .buttons {
+          text-align: center;
+          margin-top: 20px;
+      }
+
+      .total-marks {
+          text-align: center;
+          padding: auto;
+          max-width: 180px;
+          max-height: 55px;
+          box-shadow: 0 0 10px rgb(255, 255, 255);
+          color: #ffffff;
+          font-size: 25px;
+          margin-top: 25px;
+      }
+
+      .buttons button {
+          margin: 5px;
+          padding: 10px 20px;
+          font-size: 16px;
+          box-shadow: 0 0 10px rgb(255, 255, 255);
+          background-color: #2ca2afb6;
+          color: #ffffff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+      }
+
+      .buttons button.reset {
+          background-color: #7b0909;
+          color: #ffffff;
+      }
+
+
+      footer {
+          text-align: right;
+          margin-top: 20px;
+          padding: 10px;
+          background-color: #000000;
+          color: #ffffff;
+      }
+     
+  </style>
+</head>
+<body>
+  <h1>SGPA Calculator</h1>
+  <table>
+      <tbody><tr>
+          <th>SUBJECT</th>
+          <th>MARKS</th>
+      </tr>
+      <tr>
+          <td>MATHEMATICS II</td>
+          <td><input type="number" min="0" max="100"></td>
+      </tr>
+      <tr>
+          <td>APPLIED PHYSICS </td>
+          <td><input type="number" min="0" max="100"></td>
+      </tr>
+      <tr>
+          <td>PRINCIPLES OF PROGRAMMING USING C</td>
+          <td><input type="number" min="0" max="100"></td>
+      </tr>
+      <tr>
+          <td>PROFESSIONAL WRITING SKILL IN ENGLISH</td>
+          <td><input type="number" min="0" max="100"></td>
+      </tr>
+      <tr>
+          <td>BALAKE KANNADA\ SAMSKRUTIKA KANNADA</td>
+          <td><input type="number" min="0" max="100"></td>
+      </tr>
+      <tr>
+          <td>INNOVATION AND DESIGN THINKING </td>
+          <td><input type="number" min="0" max="100"></td>
+      </tr>
+      <tr>
+          <td>ESC II</td>
+          <td><input type="number" min="0" max="100"></td>
+      </tr>
+      <tr>
+          <td>PLC II</td>
+          <td><input type="number" min="0" max="100"></td>
+      </tr>
+  </tbody></table>
+  <div class="total-marks" id="sgpaDisplay"></div>
+  <div class="buttons">
+      <button onclick="calculateSGPA()">Calculate SGPA</button>
+      <button class="reset" onclick="resetMarks()">Reset</button>
+  </div>
+
+
+  <footer>
+      © Syed Javed M
+  </footer>
+
+  <script>
+      function calculateSGPA() {
+          const gradePoints = [10, 9, 8, 7, 6, 5, 4, 0];
+          const marksRanges = [90, 80, 70, 60, 50, 45, 40, 0];
+          const creditPoints = [4, 4, 3, 1, 1, 1, 3, 3]; 
+
+          const inputFields = document.querySelectorAll('input[type="number"]');
+          let totalCredits = 0;
+          let totalGradePoints = 0;
+
+          inputFields.forEach((input, index) => {
+              const marks = parseInt(input.value) || 0;
+              const credits = creditPoints[index]; 
+
+              for (let i = 0; i < marksRanges.length; i++) {
+                  if (marks >= marksRanges[i]) {
+                      totalGradePoints += credits * gradePoints[i];
+                      break;
+                  }
+              }
+
+              totalCredits += credits;
+          });
+
+          const sgpa = totalGradePoints / totalCredits;
+
+          if (!isNaN(sgpa)) {
+              document.getElementById('sgpaDisplay').textContent = `SGPA: ${sgpa.toFixed(2)}`;
+          } else {
+              document.getElementById('sgpaDisplay').textContent = "Please enter valid marks!";
+          }
+      }
+
+      function resetMarks() {
+          const inputFields = document.querySelectorAll('input[type="number"]');
+          inputFields.forEach(input => {
+              input.value = '';
+          });
+
+          document.getElementById('sgpaDisplay').textContent = '';
+      }
+  </script>
+  
+
+
+
+</body></html>
